@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="课有度中文健身动作数据集离线浏览器">
+  <title>课有度动作数据集</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="data/exercises.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#exercise-grid">跳到动作列表</a>
+
+  <header class="masthead">
+    <div class="masthead__top">
+      <a class="wordmark" href="./" aria-label="课有度动作数据集首页">
+        <span class="wordmark__mark" aria-hidden="true">K</span>
+        <span>
+          <strong>课有度</strong>
+          <small>动作数据集</small>
+        </span>
+      </a>
+      <nav aria-label="项目链接">
+        <a href="README.md">使用说明</a>
+        <a href="data/exercises.json">原始 JSON</a>
+        <a href="https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset">GitHub</a>
+      </nav>
+    </div>
+
+    <div class="hero">
+      <div class="hero__copy">
+        <h1>把动作的开始与结束，<br>放在同一个视野里。</h1>
+        <p>面向中文健身应用的结构化动作资料。可离线检索 772 个动作，逐项对照身体部位、器械、步骤和起止图。</p>
+      </div>
+      <dl class="ledger" aria-label="数据集摘要">
+        <div><dt>动作</dt><dd id="stat-exercises">772</dd></div>
+        <div><dt>图片</dt><dd id="stat-images">2,316</dd></div>
+        <div><dt>正式库</dt><dd id="stat-production">352</dd></div>
+        <div><dt>预览候选</dt><dd id="stat-preview">420</dd></div>
+      </dl>
+    </div>
+
+    <p class="safety-note"><strong>使用前请审核：</strong>所有动作尚未经过专业教练或运动医学人员逐项认证；AI 图片可能仍有结构或动作错误。</p>
+  </header>
+
+  <main>
+    <section class="catalog" aria-labelledby="catalog-title">
+      <div class="catalog__intro">
+        <div>
+          <h2 id="catalog-title">动作目录</h2>
+          <p id="result-summary" aria-live="polite">正在读取数据…</p>
+        </div>
+        <button id="clear-filters" class="quiet-button" type="button">清空筛选</button>
+      </div>
+
+      <form class="toolbar" id="filter-form" role="search">
+        <label class="search-field">
+          <span>搜索动作</span>
+          <input id="search" type="search" placeholder="名称、ID 或英文原名" autocomplete="off">
+        </label>
+        <label>
+          <span>身体部位</span>
+          <select id="body-part">
+            <option value="">全部部位</option>
+          </select>
+        </label>
+        <label>
+          <span>器械</span>
+          <select id="equipment">
+            <option value="">全部器械</option>
+          </select>
+        </label>
+        <label>
+          <span>素材阶段</span>
+          <select id="stage">
+            <option value="">全部阶段</option>
+            <option value="production">正式动作库</option>
+            <option value="candidate">预览候选</option>
+          </select>
+        </label>
+      </form>
+
+      <div id="exercise-grid" class="exercise-grid" aria-busy="true"></div>
+
+      <div class="pagination" id="pagination" hidden>
+        <button id="previous-page" type="button">上一页</button>
+        <span id="page-label"></span>
+        <button id="next-page" type="button">下一页</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="exercise-dialog" class="exercise-dialog">
+    <button class="dialog-close" id="dialog-close" type="button" aria-label="关闭详情">关闭</button>
+    <div id="dialog-content"></div>
+  </dialog>
+
+  <footer>
+    <p>数据与代码：MIT License</p>
+    <p>生成图片：CC BY 4.0 · 署名“课有度 Keyoudu”</p>
+  </footer>
+</body>
+</html>

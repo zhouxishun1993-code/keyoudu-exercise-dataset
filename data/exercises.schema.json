@@ -1,0 +1,301 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset/blob/main/data/exercises.schema.json",
+  "title": "Keyoudu Exercise Dataset",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "dataset_version",
+    "generated_at",
+    "language",
+    "counts",
+    "source",
+    "licenses",
+    "notice",
+    "excluded_candidate_ids",
+    "exercises"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "dataset_version": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "language": {
+      "const": "zh-CN"
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "exercises",
+        "production_exercises",
+        "preview_candidates",
+        "media_files",
+        "professional_reviewed",
+        "excluded_from_candidate_batch"
+      ],
+      "properties": {
+        "exercises": {
+          "const": 772
+        },
+        "production_exercises": {
+          "const": 352
+        },
+        "preview_candidates": {
+          "const": 420
+        },
+        "media_files": {
+          "const": 2316
+        },
+        "professional_reviewed": {
+          "const": 0
+        },
+        "excluded_from_candidate_batch": {
+          "const": 19
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object"
+    },
+    "licenses": {
+      "type": "object"
+    },
+    "notice": {
+      "type": "string"
+    },
+    "excluded_candidate_ids": {
+      "type": "array",
+      "minItems": 19,
+      "maxItems": 19,
+      "uniqueItems": true,
+      "items": {
+        "pattern": "^ex-[0-9]{4}$"
+      }
+    },
+    "exercises": {
+      "type": "array",
+      "minItems": 772,
+      "maxItems": 772,
+      "items": {
+        "$ref": "#/$defs/exercise"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "exercise": {
+      "type": "object",
+      "required": [
+        "id",
+        "name_zh",
+        "aliases",
+        "body_part",
+        "equipment",
+        "target",
+        "measurement",
+        "instructions_zh",
+        "instructions_en",
+        "source",
+        "media",
+        "review"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^ex-[0-9]{4}$"
+        },
+        "name_zh": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "body_part": {
+          "type": "string",
+          "minLength": 1
+        },
+        "equipment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "measurement": {
+          "enum": [
+            "reps",
+            "duration"
+          ]
+        },
+        "instructions_zh": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "instructions_en": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source": {
+          "type": "object",
+          "required": [
+            "id",
+            "name",
+            "commit",
+            "url",
+            "text_license"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[0-9]{4}$"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "commit": {
+              "const": "7455efae41b330c265e7cd4b78dfa848e7ce5ebd"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "text_license": {
+              "const": "MIT"
+            }
+          },
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "required": [
+            "thumbnail",
+            "start",
+            "end",
+            "format",
+            "attribution",
+            "license",
+            "ai_generated",
+            "sha256",
+            "dimensions"
+          ],
+          "properties": {
+            "thumbnail": {
+              "type": "string",
+              "pattern": "^images/ex-[0-9]{4}-thumb\\.webp$"
+            },
+            "start": {
+              "type": "string",
+              "pattern": "^images/ex-[0-9]{4}-start\\.webp$"
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^images/ex-[0-9]{4}-end\\.webp$"
+            },
+            "format": {
+              "const": "webp"
+            },
+            "attribution": {
+              "const": "课有度 Keyoudu"
+            },
+            "license": {
+              "const": "CC BY 4.0"
+            },
+            "ai_generated": {
+              "const": true
+            },
+            "sha256": {
+              "type": "object",
+              "required": [
+                "thumbnail",
+                "start",
+                "end"
+              ],
+              "additionalProperties": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "dimensions": {
+              "type": "object",
+              "required": [
+                "thumbnail",
+                "start",
+                "end"
+              ],
+              "additionalProperties": {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                ],
+                "items": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "review": {
+          "type": "object",
+          "required": [
+            "stage",
+            "visual_screening",
+            "professional_review"
+          ],
+          "properties": {
+            "stage": {
+              "enum": [
+                "production_2026_09_07",
+                "style_sample",
+                "historical_candidate",
+                "user_selected_original",
+                "repaired_candidate",
+                "resumed_candidate",
+                "continuation_candidate"
+              ]
+            },
+            "visual_screening": {
+              "enum": [
+                "production_authorized",
+                "ai_visual_candidate"
+              ]
+            },
+            "professional_review": {
+              "const": "not_performed"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
