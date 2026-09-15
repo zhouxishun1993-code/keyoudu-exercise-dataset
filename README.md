@@ -11,6 +11,37 @@
 - 规范 JSON、JSON Schema 和可直接打开的离线浏览页。
 - 明确的数据来源、媒体署名、许可证和专业审核状态。
 
+## 图片示例
+
+以下示例直接引用仓库内的 AI 生成图片，分别展示动作的开始与结束姿势。
+
+<table>
+  <thead>
+    <tr>
+      <th>动作</th>
+      <th>开始</th>
+      <th>结束</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>俯卧撑</td>
+      <td><img src="images/ex-0662-start.webp" alt="俯卧撑开始姿势" width="240"></td>
+      <td><img src="images/ex-0662-end.webp" alt="俯卧撑结束姿势" width="240"></td>
+    </tr>
+    <tr>
+      <td>徒手深蹲</td>
+      <td><img src="images/ex-3119-start.webp" alt="徒手深蹲开始姿势" width="240"></td>
+      <td><img src="images/ex-3119-end.webp" alt="徒手深蹲结束姿势" width="240"></td>
+    </tr>
+    <tr>
+      <td>哑铃弯举</td>
+      <td><img src="images/ex-0294-start.webp" alt="哑铃弯举开始姿势" width="240"></td>
+      <td><img src="images/ex-0294-end.webp" alt="哑铃弯举结束姿势" width="240"></td>
+    </tr>
+  </tbody>
+</table>
+
 ## 快速使用
 
 直接双击根目录的 index.html，即可离线搜索、筛选并对照动作开始和结束图，不需要安装依赖或启动服务器。
