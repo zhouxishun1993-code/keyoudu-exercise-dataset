@@ -42,6 +42,45 @@
   </tbody>
 </table>
 
+### 复杂器械示例
+
+<table>
+  <thead>
+    <tr>
+      <th>动作</th>
+      <th>开始</th>
+      <th>结束</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>绳索中位夹胸（龙门架）</td>
+      <td><img src="images/ex-0188-start.webp" alt="绳索中位夹胸开始姿势" width="240"></td>
+      <td><img src="images/ex-0188-end.webp" alt="绳索中位夹胸结束姿势" width="240"></td>
+    </tr>
+    <tr>
+      <td>绳索高位下拉</td>
+      <td><img src="images/ex-0198-start.webp" alt="绳索高位下拉开始姿势" width="240"></td>
+      <td><img src="images/ex-0198-end.webp" alt="绳索高位下拉结束姿势" width="240"></td>
+    </tr>
+    <tr>
+      <td>器械坐姿划船</td>
+      <td><img src="images/ex-1350-start.webp" alt="器械坐姿划船开始姿势" width="240"></td>
+      <td><img src="images/ex-1350-end.webp" alt="器械坐姿划船结束姿势" width="240"></td>
+    </tr>
+    <tr>
+      <td>器械 45 度腿举</td>
+      <td><img src="images/ex-0739-start.webp" alt="器械 45 度腿举开始姿势" width="240"></td>
+      <td><img src="images/ex-0739-end.webp" alt="器械 45 度腿举结束姿势" width="240"></td>
+    </tr>
+    <tr>
+      <td>哈克深蹲</td>
+      <td><img src="images/ex-0743-start.webp" alt="哈克深蹲开始姿势" width="240"></td>
+      <td><img src="images/ex-0743-end.webp" alt="哈克深蹲结束姿势" width="240"></td>
+    </tr>
+  </tbody>
+</table>
+
 ## 快速使用
 
 直接双击根目录的 index.html，即可离线搜索、筛选并对照动作开始和结束图，不需要安装依赖或启动服务器。
