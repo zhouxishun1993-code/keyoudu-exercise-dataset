@@ -10,7 +10,6 @@
   --cyan-pale: #dff4f7;
   --warning: #6d4b00;
   --warning-bg: #fff2cf;
-  --production: #1f6a4d;
   --radius-small: 6px;
   --radius-large: 14px;
   --shadow-dialog: 0 24px 80px rgba(19, 35, 39, 0.28);
@@ -373,16 +372,6 @@ main {
   background: var(--paper);
   color: var(--muted);
   font-size: 11px;
-}
-
-.tag--production {
-  background: #e3f1ea;
-  color: var(--production);
-}
-
-.tag--candidate {
-  background: var(--cyan-pale);
-  color: var(--cyan-dark);
 }
 
 .exercise-card__open {

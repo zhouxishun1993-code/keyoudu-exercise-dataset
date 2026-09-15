@@ -4,12 +4,8 @@ window.KEYOUDU_EXERCISE_DATASET = {
   "generated_at": "2026-09-10T14:15:29.346Z",
   "language": "zh-CN",
   "counts": {
-    "exercises": 772,
-    "production_exercises": 352,
-    "preview_candidates": 420,
     "media_files": 2316,
-    "professional_reviewed": 0,
-    "excluded_from_candidate_batch": 19
+    "professional_reviewed": 0
   },
   "source": {
     "project": "hasaneyldrm/exercises-dataset",
@@ -23,27 +19,6 @@ window.KEYOUDU_EXERCISE_DATASET = {
     "generated_media_attribution": "课有度 Keyoudu"
   },
   "notice": "动作文本和图片尚未经过运动医学或专业教练逐项审核，不构成训练、医疗或安全建议。",
-  "excluded_candidate_ids": [
-    "ex-1264",
-    "ex-0231",
-    "ex-0305",
-    "ex-0307",
-    "ex-1734",
-    "ex-0337",
-    "ex-0331",
-    "ex-0339",
-    "ex-2706",
-    "ex-1286",
-    "ex-1622",
-    "ex-1414",
-    "ex-1415",
-    "ex-0363",
-    "ex-0370",
-    "ex-0316",
-    "ex-0325",
-    "ex-0367",
-    "ex-0371"
-  ],
   "exercises": [
     {
       "id": "ex-0662",

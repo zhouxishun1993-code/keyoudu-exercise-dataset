@@ -11,7 +11,6 @@
   var searchInput = document.getElementById("search");
   var bodyPartSelect = document.getElementById("body-part");
   var equipmentSelect = document.getElementById("equipment");
-  var stageSelect = document.getElementById("stage");
   var pagination = document.getElementById("pagination");
   var previousPage = document.getElementById("previous-page");
   var nextPage = document.getElementById("next-page");
@@ -26,14 +25,6 @@
       .replace(/>/g, "&gt;")
       .replace(/\"/g, "&quot;")
       .replace(/'/g, "&#039;");
-  }
-
-  function stageGroup(exercise) {
-    return exercise.review.stage.indexOf("production_") === 0 ? "production" : "candidate";
-  }
-
-  function stageLabel(exercise) {
-    return stageGroup(exercise) === "production" ? "正式动作库" : "预览候选";
   }
 
   function populateSelect(select, values) {
@@ -61,12 +52,10 @@
     ].join(" "));
     return (!term || haystack.indexOf(term) !== -1) &&
       (!bodyPartSelect.value || exercise.body_part === bodyPartSelect.value) &&
-      (!equipmentSelect.value || exercise.equipment === equipmentSelect.value) &&
-      (!stageSelect.value || stageGroup(exercise) === stageSelect.value);
+      (!equipmentSelect.value || exercise.equipment === equipmentSelect.value);
   }
 
   function cardHtml(exercise) {
-    var group = stageGroup(exercise);
     return "<button class=\"exercise-card\" type=\"button\" data-exercise-id=\"" + escapeHtml(exercise.id) + "\" aria-label=\"查看 " + escapeHtml(exercise.name_zh) + " 详情\">" +
       "<span class=\"exercise-card__visual\">" +
         "<img class=\"exercise-card__image\" src=\"" + escapeHtml(exercise.media.thumbnail) + "\" alt=\"\" loading=\"lazy\">" +
@@ -77,7 +66,6 @@
         "<span class=\"exercise-card__meta\">" +
           "<span class=\"tag\">" + escapeHtml(exercise.body_part) + "</span>" +
           "<span class=\"tag\">" + escapeHtml(exercise.equipment) + "</span>" +
-          "<span class=\"tag tag--" + group + "\">" + stageLabel(exercise) + "</span>" +
         "</span>" +
         "<span class=\"exercise-card__open\">查看起止动作与步骤</span>" +
       "</span>" +
@@ -98,7 +86,7 @@
     grid.setAttribute("aria-busy", "false");
 
     var shownFrom = visible.length ? start + 1 : 0;
-    summary.textContent = "找到 " + filtered.length + " 个动作，当前显示 " + shownFrom + "–" + (start + visible.length);
+    summary.textContent = visible.length ? "当前显示 " + shownFrom + "–" + (start + visible.length) : "没有匹配结果";
     pageLabel.textContent = "第 " + page + " / " + totalPages + " 页";
     previousPage.disabled = page <= 1;
     nextPage.disabled = page >= totalPages;
@@ -117,7 +105,7 @@
     }).join("");
     return "<article class=\"detail\">" +
       "<header class=\"detail__heading\">" +
-        "<p class=\"detail__id\">" + escapeHtml(exercise.id) + " · " + stageLabel(exercise) + "</p>" +
+        "<p class=\"detail__id\">" + escapeHtml(exercise.id) + "</p>" +
         "<h2>" + escapeHtml(exercise.name_zh) + "</h2>" +
         "<p class=\"detail__source\">原名：" + escapeHtml(exercise.source.name) + "</p>" +
       "</header>" +
@@ -132,7 +120,6 @@
           "<div><dt>身体部位</dt><dd>" + escapeHtml(exercise.body_part) + "</dd></div>" +
           "<div><dt>器械</dt><dd>" + escapeHtml(exercise.equipment) + "</dd></div>" +
           "<div><dt>计量方式</dt><dd>" + (exercise.measurement === "duration" ? "时长" : "次数") + "</dd></div>" +
-          "<div><dt>素材阶段</dt><dd>" + stageLabel(exercise) + "</dd></div>" +
           "<div><dt>媒体许可</dt><dd>CC BY 4.0</dd></div>" +
           "<div><dt>专业审核</dt><dd>未进行</dd></div>" +
         "</dl></aside>" +
@@ -165,11 +152,6 @@
       return;
     }
 
-    document.getElementById("stat-exercises").textContent = dataset.counts.exercises.toLocaleString("zh-CN");
-    document.getElementById("stat-images").textContent = dataset.counts.media_files.toLocaleString("zh-CN");
-    document.getElementById("stat-production").textContent = dataset.counts.production_exercises.toLocaleString("zh-CN");
-    document.getElementById("stat-preview").textContent = dataset.counts.preview_candidates.toLocaleString("zh-CN");
-
     populateSelect(bodyPartSelect, Array.from(new Set(dataset.exercises.map(function (item) { return item.body_part; }))));
     populateSelect(equipmentSelect, Array.from(new Set(dataset.exercises.map(function (item) { return item.equipment; }))));
     filtered = dataset.exercises.slice();
@@ -182,7 +164,6 @@
     searchInput.value = "";
     bodyPartSelect.value = "";
     equipmentSelect.value = "";
-    stageSelect.value = "";
     applyFilters();
     searchInput.focus();
   });

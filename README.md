@@ -1,20 +1,15 @@
 # 课有度动作数据集
 
-面向中文健身应用与开发者的结构化动作数据集。当前预览版收录 772 个动作，每个动作包含中文名称、动作步骤、身体部位、器械信息，以及 AI 生成的开始、结束和缩略图。
+面向中文健身应用与开发者的结构化动作数据集。每条记录包含中文名称、动作步骤、身体部位、器械信息，以及 AI 生成的开始、结束和缩略图。
 
 > 重要提示：这些内容尚未经过运动医学人员或专业教练逐项审核。图片经过结构、透视、握法与支撑关系的 AI 目视筛选，但仍可能存在错误。本项目不构成训练、医疗或安全建议。
 
-## 数据规模
+## 数据内容
 
-| 内容 | 数量 |
-| --- | ---: |
-| 动作 | 772 |
-| 已用于课有度正式动作库 | 352 |
-| 本次加入的预览候选 | 420 |
-| WebP 图片 | 2,316 |
-| 已完成专业审核 | 0 |
-
-本次候选池原有 439 个动作。15 个待返修或待确定动作，以及 4 个用户明确跳过的动作未收录。完整边界见 [筛选范围](docs/SELECTION_SCOPE.md)。
+- 可离线检索的结构化动作记录。
+- 与动作记录对应的 WebP 开始图、结束图和缩略图。
+- 规范 JSON、JSON Schema 和可直接打开的离线浏览页。
+- 明确的数据来源、媒体署名、许可证和专业审核状态。
 
 ## 快速使用
 
@@ -58,9 +53,9 @@ images/ex-0001-end.webp
 - instructions_zh、instructions_en
 - source：上游动作文本来源、固定提交和许可证
 - media：三张图片路径、尺寸、哈希、署名和许可证
-- review：素材所处阶段、筛选状态和专业审核状态
+- review：素材审核状态
 
-所有 review.professional_review 当前均为 not_performed。production 字样只表示素材已用于课有度正式动作库，不表示它经过专业动作认证。
+所有 review.professional_review 当前均为 not_performed，不表示素材经过专业动作认证。
 
 ## 验证
 
@@ -70,7 +65,7 @@ images/ex-0001-end.webp
 npm test
 ~~~
 
-校验会检查动作数量、编号唯一性、19 个排除项、图片引用、WebP 文件头、单项哈希、离线快照一致性和 SHA256SUMS.txt。
+校验会检查数据结构、编号唯一性、图片引用、WebP 文件头、单项哈希、离线快照一致性和 SHA256SUMS.txt。
 
 ## 来源与许可证
 
@@ -84,6 +79,6 @@ npm test
 
 ## English
 
-Keyoudu Exercise Dataset is a Chinese-first fitness exercise dataset for developers. This preview contains 772 exercises and 2,316 AI-generated WebP images. The data and code are MIT-licensed; generated media is offered under CC BY 4.0 with attribution to “课有度 Keyoudu”.
+Keyoudu Exercise Dataset is a Chinese-first fitness exercise dataset for developers, with structured records and AI-generated WebP images. The data and code are MIT-licensed; generated media is offered under CC BY 4.0 with attribution to “课有度 Keyoudu”.
 
 The exercises and images have not been individually approved by a medical professional or certified trainer. Do not treat this repository as medical, safety, or training advice.
