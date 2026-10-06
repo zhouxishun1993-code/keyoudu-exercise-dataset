@@ -67,7 +67,7 @@
           "<span class=\"tag\">" + escapeHtml(exercise.body_part) + "</span>" +
           "<span class=\"tag\">" + escapeHtml(exercise.equipment) + "</span>" +
         "</span>" +
-        "<span class=\"exercise-card__open\">查看起止动作与步骤</span>" +
+        "<span class=\"exercise-card__open\">查看动作图与步骤</span>" +
       "</span>" +
     "</button>";
   }
@@ -100,6 +100,16 @@
   }
 
   function detailHtml(exercise) {
+    var frames = exercise.media.frames || [
+      { phase: "start", path: exercise.media.start },
+      { phase: "end", path: exercise.media.end }
+    ];
+    var poses = frames.map(function (frame, index) {
+      var label = frames.length === 1 ? "保持姿势" :
+        index === 0 ? "开始" : index === frames.length - 1 ? "结束" : "中间动作 " + index;
+      return "<figure class=\"pose\"><img src=\"" + escapeHtml(frame.path) + "\" alt=\"" +
+        escapeHtml(exercise.name_zh + " " + label) + "\"><figcaption>" + label + "</figcaption></figure>";
+    }).join("");
     var instructions = exercise.instructions_zh.map(function (step) {
       return "<li>" + escapeHtml(step) + "</li>";
     }).join("");
@@ -110,8 +120,7 @@
         "<p class=\"detail__source\">原名：" + escapeHtml(exercise.source.name) + "</p>" +
       "</header>" +
       "<div class=\"pose-pair\">" +
-        "<figure class=\"pose\"><img src=\"" + escapeHtml(exercise.media.start) + "\" alt=\"" + escapeHtml(exercise.name_zh) + " 开始动作\"><figcaption>开始</figcaption></figure>" +
-        "<figure class=\"pose\"><img src=\"" + escapeHtml(exercise.media.end) + "\" alt=\"" + escapeHtml(exercise.name_zh) + " 结束动作\"><figcaption>结束</figcaption></figure>" +
+        poses +
       "</div>" +
       "<div class=\"detail__content\">" +
         "<section><h3>动作步骤</h3><ol class=\"instructions\">" + instructions + "</ol>" +

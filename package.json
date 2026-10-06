@@ -1,8 +1,8 @@
 {
   "name": "keyoudu-exercise-dataset",
-  "version": "0.1.0-rc.1",
+  "version": "0.2.0-rc.1",
   "private": true,
-  "description": "Chinese-first fitness exercise dataset with AI-generated start and end images",
+  "description": "Chinese-first fitness exercise dataset with AI-generated ordered movement images",
   "type": "module",
   "scripts": {
     "sync": "node scripts/sync.mjs",

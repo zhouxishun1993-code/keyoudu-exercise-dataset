@@ -1,13 +1,13 @@
 # 课有度动作数据集
 
-面向中文健身应用与开发者的结构化动作数据集。每条记录包含中文名称、动作步骤、身体部位、器械信息，以及 AI 生成的开始、结束和缩略图。
+面向中文健身应用与开发者的结构化动作数据集。每条记录包含中文名称、动作步骤、身体部位、器械信息，以及 AI 生成的动作图和缩略图。多阶段动作保留中间姿势，静态保持动作展示保持姿势。
 
 > 重要提示：这些内容尚未经过运动医学人员或专业教练逐项审核。图片经过结构、透视、握法与支撑关系的 AI 目视筛选，但仍可能存在错误。本项目不构成训练、医疗或安全建议。
 
 ## 数据内容
 
 - 可离线检索的结构化动作记录。
-- 与动作记录对应的 WebP 开始图、结束图和缩略图。
+- 与动作记录对应的 WebP 动作图、完整阶段顺序和缩略图。
 - 规范 JSON、JSON Schema 和可直接打开的离线浏览页。
 - 明确的数据来源、媒体署名、许可证和专业审核状态。
 
@@ -122,8 +122,12 @@ images/ex-0001-end.webp
 - body_part、equipment、target、measurement
 - instructions_zh、instructions_en
 - source：上游动作文本来源、固定提交和许可证
-- media：三张图片路径、尺寸、哈希、署名和许可证
+- media：兼容图片及各动作阶段的路径、尺寸、哈希、署名和许可证
+- media.frames：按展示顺序排列的动作图；每帧包含 phase、path、sha256 和 dimensions
+- media.sequence：动作阶段顺序，可包含返回阶段，例如 start-middle-end-middle-start
 - review：素材审核状态
+
+media.start、media.end 和 media.thumbnail 保持兼容。静态保持动作的 frames 仅包含 hold；其 start 与 end 指向内容相同的兼容图片。instructions_en 为空数组时，以当前中文动作说明为准。
 
 所有 review.professional_review 当前均为 not_performed，不表示素材经过专业动作认证。
 

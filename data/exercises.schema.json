@@ -16,7 +16,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "1.0.0"
+      "const": "1.1.0"
     },
     "dataset_version": {
       "type": "string"
@@ -36,7 +36,8 @@
       ],
       "properties": {
         "media_files": {
-          "const": 2316
+          "type": "integer",
+          "minimum": 1
         },
         "professional_reviewed": {
           "const": 0
@@ -172,7 +173,9 @@
             "license",
             "ai_generated",
             "sha256",
-            "dimensions"
+            "dimensions",
+            "frames",
+            "sequence"
           ],
           "properties": {
             "thumbnail": {
@@ -232,6 +235,59 @@
                 ],
                 "items": false
               }
+            },
+            "frames": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "phase",
+                  "path",
+                  "sha256",
+                  "dimensions"
+                ],
+                "properties": {
+                  "phase": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                  },
+                  "path": {
+                    "type": "string",
+                    "pattern": "^images/ex-[0-9]{4}-[a-z][a-z0-9-]*\\.webp$"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "dimensions": {
+                    "type": "array",
+                    "prefixItems": [
+                      {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 768
+                      },
+                      {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 768
+                      }
+                    ],
+                    "items": false,
+                    "minItems": 2
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "sequence": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              }
             }
           },
           "additionalProperties": false
@@ -252,13 +308,15 @@
                 "user_selected_original",
                 "repaired_candidate",
                 "resumed_candidate",
-                "continuation_candidate"
+                "continuation_candidate",
+                "reviewed_illustration"
               ]
             },
             "visual_screening": {
               "enum": [
                 "production_authorized",
-                "ai_visual_candidate"
+                "ai_visual_candidate",
+                "ai_quick_visual_pass"
               ]
             },
             "professional_review": {

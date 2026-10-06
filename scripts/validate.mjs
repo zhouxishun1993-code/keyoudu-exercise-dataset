@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const excludedNames = new Set([".git", "node_modules"]);
 const allowedStages = new Set([
+  "reviewed_illustration",
   "production_2026_09_07",
   "style_sample",
   "historical_candidate",
@@ -37,7 +38,7 @@ async function walk(directory) {
 }
 
 function safeMediaPath(relative) {
-  assert(typeof relative === "string" && /^images\/ex-\d{4}-(?:thumb|start|end)\.webp$/.test(relative), "Invalid media path: " + relative);
+  assert(typeof relative === "string" && /^images\/ex-\d{4}-[a-z][a-z0-9-]*\.webp$/.test(relative), "Invalid media path: " + relative);
   const absolute = path.resolve(root, relative);
   const imagesRoot = path.resolve(root, "images") + path.sep;
   assert(absolute.startsWith(imagesRoot), "Media path escapes images/: " + relative);
@@ -48,9 +49,9 @@ const dataPath = path.join(root, "data", "exercises.json");
 const dataset = JSON.parse(await fs.readFile(dataPath, "utf8"));
 JSON.parse(await fs.readFile(path.join(root, "data", "exercises.schema.json"), "utf8"));
 
-assert(dataset.schema_version === "1.0.0", "Unexpected schema version");
-assert(dataset.dataset_version === "0.1.0-rc.1", "Unexpected dataset version");
-assert(dataset.counts.media_files === 2316, "Expected 2316 media files");
+assert(dataset.schema_version === "1.1.0", "Unexpected schema version");
+assert(dataset.dataset_version === "0.2.0-rc.1", "Unexpected dataset version");
+assert(Number.isInteger(dataset.counts.media_files) && dataset.counts.media_files > 0, "Invalid media count");
 assert(dataset.counts.professional_reviewed === 0, "Professional review count must remain zero");
 assert(Array.isArray(dataset.exercises) && dataset.exercises.length > 0, "Expected exercise records");
 
@@ -71,9 +72,12 @@ for (const exercise of dataset.exercises) {
   assert(exercise.media.license === "CC BY 4.0", "Media license changed: " + exercise.id);
   assert(exercise.media.attribution === "课有度 Keyoudu", "Media attribution changed: " + exercise.id);
   assert(exercise.media.ai_generated === true, "Media must be marked AI-generated: " + exercise.id);
+  assert(exercise.review.visual_screening === "ai_quick_visual_pass", "Missing current visual review status: " + exercise.id);
+  assert(exercise.source.id === exercise.id.slice(3), "Source ID mismatch: " + exercise.id);
 
   for (const kind of ["thumbnail", "start", "end"]) {
     const relative = exercise.media[kind];
+    assert(relative === "images/" + exercise.id + "-" + (kind === "thumbnail" ? "thumb" : kind) + ".webp", "Incorrect canonical image path: " + relative);
     const absolute = safeMediaPath(relative);
     expectedMedia.add(relative);
     const bytes = await fs.readFile(absolute);
@@ -85,15 +89,37 @@ for (const exercise of dataset.exercises) {
     const maximum = kind === "thumbnail" ? 256 : 768;
     assert(dimensions[0] > 0 && dimensions[1] > 0 && dimensions[0] <= maximum && dimensions[1] <= maximum, "Image dimensions exceed limit: " + relative);
   }
-  assert(exercise.media.sha256.start !== exercise.media.sha256.end, "Start/end images are identical: " + exercise.id);
+  const frames = exercise.media.frames;
+  assert(Array.isArray(frames) && frames.length > 0, "Missing ordered frames: " + exercise.id);
+  const phases = new Set();
+  for (const frame of frames) {
+    assert(/^[a-z][a-z0-9-]*$/.test(frame.phase) && !phases.has(frame.phase), "Invalid or duplicate phase: " + exercise.id);
+    phases.add(frame.phase);
+    assert(frame.path.startsWith("images/" + exercise.id + "-"), "Frame belongs to another exercise: " + exercise.id);
+    const bytes = await fs.readFile(safeMediaPath(frame.path));
+    assert(bytes.subarray(0, 4).toString("ascii") === "RIFF" && bytes.subarray(8, 12).toString("ascii") === "WEBP", "Invalid frame image: " + frame.path);
+    assert(hash(bytes) === frame.sha256, "Frame hash mismatch: " + frame.path);
+    assert(Array.isArray(frame.dimensions) && frame.dimensions.length === 2 && frame.dimensions.every((n) => Number.isInteger(n) && n > 0 && n <= 768), "Invalid frame dimensions: " + frame.path);
+    expectedMedia.add(frame.path);
+  }
+  assert(frames[0].path === exercise.media.start, "First frame must match start: " + exercise.id);
+  if (frames.length === 1) {
+    assert(exercise.measurement === "duration" && frames[0].phase === "hold", "Single frame requires an explicit hold: " + exercise.id);
+    assert(exercise.media.sha256.start === exercise.media.sha256.end, "Hold compatibility images differ: " + exercise.id);
+  } else {
+    assert(frames.at(-1).path === exercise.media.end, "Last frame must match end: " + exercise.id);
+    assert(exercise.media.sha256.start !== exercise.media.sha256.end, "Start/end images are identical: " + exercise.id);
+  }
+  assert(Array.isArray(exercise.media.sequence) && exercise.media.sequence.length >= frames.length && exercise.media.sequence.every((phase) => phases.has(phase)), "Invalid playback sequence: " + exercise.id);
+  assert(new Set(exercise.media.sequence).size === phases.size, "Playback sequence omits a phase: " + exercise.id);
 }
 
-assert(expectedMedia.size === dataset.exercises.length * 3, "Expected three unique media references per exercise");
+assert(expectedMedia.size === dataset.counts.media_files, "Media count does not match referenced files");
 
 const actualMedia = (await fs.readdir(path.join(root, "images")))
   .filter((name) => name.endsWith(".webp"))
   .map((name) => "images/" + name);
-assert(actualMedia.length === 2316, "Expected 2316 WebP files");
+assert(actualMedia.length === dataset.counts.media_files, "Unexpected number of WebP files");
 for (const relative of actualMedia) assert(expectedMedia.has(relative), "Unreferenced image: " + relative);
 
 const browserPrefix = "window.KEYOUDU_EXERCISE_DATASET = ";
@@ -122,5 +148,6 @@ for (const file of files) {
 const serialized = JSON.stringify(dataset);
 assert(!/[A-Za-z]:\\\\/.test(serialized), "Dataset contains an absolute Windows path");
 assert(!serialized.includes("prompt.txt") && !serialized.includes("generation-log"), "Dataset leaks internal generation records");
+assert(!/待核|待确认|没收录|未收录/.test(serialized), "Dataset contains internal editing labels");
 
 console.log("Validated exercise dataset and WebP media.");
