@@ -8,7 +8,7 @@
 
 > **重要提示：** 这些内容没有经过运动医学人员或专业教练逐项审核。图片和文字都由 AI 生成或整理，只做过 AI 目视筛选，仍可能有错误。本项目不构成训练、医疗或安全建议，用于产品前请自行审核。已知问题见 [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md)。
 
-[English summary](#english)
+**在线浏览：** <https://zhouxishun1993-code.github.io/keyoudu-exercise-dataset/>　·　[English summary](#english)
 
 ## 数据概览
 
@@ -84,7 +84,7 @@
 
 ## 快速使用
 
-**直接浏览：** 克隆或下载仓库后双击根目录的 `index.html`，即可离线搜索，并按身体部位、器械和目标肌群筛选，不需要安装依赖或启动服务器。
+**直接浏览：** 打开[在线浏览页](https://zhouxishun1993-code.github.io/keyoudu-exercise-dataset/)，或者克隆、下载仓库后双击根目录的 `index.html` 离线使用。两者都可以搜索，并按身体部位、器械和目标肌群筛选，不需要安装依赖或启动服务器。
 
 **文件入口：**
 
@@ -153,6 +153,8 @@ npm test
 
 动作结构和文本基于 [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset) 固定提交 `7455efae41b330c265e7cd4b78dfa848e7ce5ebd` 的 MIT 许可内容，并经过中文整理和改写。该上游项目把自身的 `images/` 与 `videos/` 排除在 MIT 许可之外；本仓库没有复制上游的图片、GIF 或视频。
 
+图片使用 OpenAI 的图像生成模型 GPT Image 2 生成，以 WebP 格式发布。
+
 本仓库的代码与数据改编采用 MIT License。AI 生成图片由“课有度 Keyoudu”以 CC BY 4.0 提供；使用图片时请保留署名、许可证链接并标明修改。详见 [LICENSE](LICENSE)、[媒体许可证](LICENSE-MEDIA.md)、[NOTICE](NOTICE.md) 与 [第三方声明](THIRD_PARTY_NOTICES.md)。
 
 引用本数据集时可以使用仓库根目录的 [CITATION.cff](CITATION.cff)。
@@ -165,7 +167,7 @@ npm test
 
 Keyoudu Exercise Dataset is a Chinese-first fitness exercise dataset for developers: 1,296 exercises and 3,931 AI-generated WebP images. Every record has a Chinese name, step-by-step instructions in Chinese and English, a body region, equipment, a primary target, and an ordered list of movement frames.
 
-- **Use it:** open `index.html` for an offline browser, or read `data/exercises.json` (schema in `data/exercises.schema.json`). Field reference: [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md) (the `body_part`, `equipment` and `target_zh` values are Chinese; `target` keeps the upstream English key).
+- **Use it:** browse [online](https://zhouxishun1993-code.github.io/keyoudu-exercise-dataset/), open `index.html` for an offline browser, or read `data/exercises.json` (schema in `data/exercises.schema.json`). Field reference: [docs/DATA_DICTIONARY.md](docs/DATA_DICTIONARY.md) (the `body_part`, `equipment` and `target_zh` values are Chinese; `target` keeps the upstream English key).
 - **Verify it:** `npm test` (Node.js 20+, no dependencies).
-- **License:** data and code are MIT; generated images are CC BY 4.0 with attribution to “课有度 Keyoudu”. Exercise structure and text derive from [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset) at commit `7455efae`, whose own media is not included here.
+- **License:** data and code are MIT; generated images are CC BY 4.0 with attribution to “课有度 Keyoudu”. Exercise structure and text derive from [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset) at commit `7455efae`, whose own media is not included here. The images were generated with OpenAI's GPT Image 2 model.
 - **Caveat:** neither the text nor the images have been reviewed by a medical professional or certified trainer, and both are AI-generated or AI-edited. Do not treat this repository as medical, safety, or training advice. See [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md).

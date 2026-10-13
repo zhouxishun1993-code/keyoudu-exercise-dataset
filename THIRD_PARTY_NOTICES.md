@@ -13,4 +13,4 @@
 
 ## AI 生成图片
 
-本仓库 images/ 中的 3,931 个 WebP 文件来自课有度项目的独立 AI 图像生成流程，而不是上游媒体。其许可与署名要求见 LICENSE-MEDIA.md。
+本仓库 images/ 中的 3,931 个 WebP 文件来自课有度项目的独立 AI 图像生成流程（使用 OpenAI 的 GPT Image 2 模型），而不是上游媒体。其许可与署名要求见 LICENSE-MEDIA.md。

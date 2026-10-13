@@ -159,6 +159,10 @@
   }
 
   function initialize() {
+    // A raw .md would download on the hosted site, so the guide link goes to GitHub there.
+    if (/^https?:$/.test(window.location.protocol)) {
+      document.getElementById("guide-link").href = "https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset#readme";
+    }
     if (!dataset || !Array.isArray(dataset.exercises)) {
       grid.innerHTML = "<div class=\"empty-state\"><h3>数据读取失败</h3><p>请确认 data/exercises.js 与 index.html 位于同一个仓库。</p></div>";
       summary.textContent = "读取失败";
