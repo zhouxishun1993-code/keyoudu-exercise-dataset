@@ -1,9 +1,17 @@
 {
   "name": "keyoudu-exercise-dataset",
-  "version": "0.2.0-rc.1",
+  "version": "0.3.0",
   "private": true,
-  "description": "Chinese-first fitness exercise dataset with AI-generated ordered movement images",
+  "description": "Chinese-first fitness exercise dataset with bilingual instructions and AI-generated ordered movement images",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset.git"
+  },
+  "homepage": "https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset#readme",
+  "bugs": {
+    "url": "https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset/issues"
+  },
   "scripts": {
     "sync": "node scripts/sync.mjs",
     "test": "node scripts/validate.mjs"

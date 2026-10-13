@@ -1,0 +1,35 @@
+name: 数据或文字纠错
+description: 名称、别名、部位、器械、目标肌群或动作说明有误
+labels: ["data"]
+body:
+  - type: input
+    id: exercise
+    attributes:
+      label: 动作 ID
+      description: 例如 ex-0662；多个动作请用逗号分隔
+    validations:
+      required: true
+  - type: dropdown
+    id: field
+    attributes:
+      label: 有问题的字段
+      options:
+        - 中文名称或别名
+        - 身体部位、器械或目标肌群
+        - 中文说明
+        - 英文说明
+        - 其他
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题与建议的改法
+      description: 请区分“明显错误”“动作定义争议”和“个人训练偏好”
+    validations:
+      required: true
+  - type: textarea
+    id: basis
+    attributes:
+      label: 判断依据
+      description: 可核实的来源、教材或你的专业背景
