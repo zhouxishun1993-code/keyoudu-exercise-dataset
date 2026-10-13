@@ -1,0 +1,25 @@
+name: 图片问题
+description: 人体结构、透视、握法、器械连接或动作阶段有误
+labels: ["image"]
+body:
+  - type: input
+    id: exercise
+    attributes:
+      label: 动作 ID
+      description: 例如 ex-0308
+    validations:
+      required: true
+  - type: input
+    id: frame
+    attributes:
+      label: 哪一张图
+      description: 例如 start、end、middle 或缩略图
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 图里哪里不对，正确的样子应该是什么
+    validations:
+      required: true

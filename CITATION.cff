@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+title: "Keyoudu Exercise Dataset (课有度动作数据集)"
+type: dataset
+authors:
+  - name: "课有度 Keyoudu"
+version: 0.3.0
+date-released: 2026-10-13
+repository-code: "https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset"
+url: "https://github.com/zhouxishun1993-code/keyoudu-exercise-dataset"
+license: MIT
+keywords:
+  - fitness
+  - exercise
+  - dataset
+  - chinese
+abstract: >-
+  A Chinese-first fitness exercise dataset with 1,296 structured records,
+  bilingual step-by-step instructions and AI-generated ordered movement images.
+  Data and code are MIT-licensed; generated images are CC BY 4.0. Text derives
+  from hasaneyldrm/exercises-dataset (MIT). Not reviewed by medical or coaching
+  professionals.
+references:
+  - type: dataset
+    title: "exercises-dataset"
+    authors:
+      - family-names: "Yıldırım"
+        given-names: "Hasan Emir"
+    url: "https://github.com/hasaneyldrm/exercises-dataset"
+    notes: "Upstream source of exercise structure and text, commit 7455efae41b330c265e7cd4b78dfa848e7ce5ebd, MIT License."

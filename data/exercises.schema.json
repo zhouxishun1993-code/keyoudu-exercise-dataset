@@ -16,10 +16,11 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "1.1.0"
+      "const": "1.2.0"
     },
     "dataset_version": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^[0-9]+.[0-9]+.[0-9]+(-[0-9A-Za-z.]+)?$"
     },
     "generated_at": {
       "type": "string",
@@ -31,10 +32,15 @@
     "counts": {
       "type": "object",
       "required": [
+        "exercises",
         "media_files",
         "professional_reviewed"
       ],
       "properties": {
+        "exercises": {
+          "type": "integer",
+          "minimum": 1
+        },
         "media_files": {
           "type": "integer",
           "minimum": 1
@@ -73,6 +79,7 @@
         "body_part",
         "equipment",
         "target",
+        "target_zh",
         "measurement",
         "instructions_zh",
         "instructions_en",
@@ -97,17 +104,96 @@
           }
         },
         "body_part": {
-          "type": "string",
-          "minLength": 1
+          "description": "Chinese body-region label; one value per upstream body_part bucket.",
+          "enum": [
+            "背部",
+            "胸部",
+            "肩部",
+            "上臂",
+            "前臂",
+            "核心",
+            "臀腿",
+            "小腿",
+            "有氧",
+            "颈部"
+          ]
         },
         "equipment": {
-          "type": "string",
-          "minLength": 1
+          "description": "Chinese equipment label.",
+          "enum": [
+            "自重",
+            "哑铃",
+            "杠铃",
+            "曲杆杠铃",
+            "六角杠铃",
+            "壶铃",
+            "绳索",
+            "固定器械",
+            "史密斯机",
+            "弹力带",
+            "拉伸带",
+            "负重",
+            "瑞士球",
+            "BOSU球",
+            "药球",
+            "泡沫轴",
+            "健腹轮",
+            "平衡板",
+            "战绳",
+            "攀爬绳",
+            "跳绳",
+            "训练锤",
+            "轮胎",
+            "有氧器械",
+            "搭档辅助"
+          ]
         },
         "target": {
-          "type": [
-            "string",
-            "null"
+          "description": "Primary target, kept as the upstream English key for stable programmatic use.",
+          "enum": [
+            "abs",
+            "abductors",
+            "adductors",
+            "biceps",
+            "calves",
+            "cardiovascular system",
+            "delts",
+            "forearms",
+            "glutes",
+            "hamstrings",
+            "lats",
+            "levator scapulae",
+            "pectorals",
+            "quads",
+            "serratus anterior",
+            "spine",
+            "traps",
+            "triceps",
+            "upper back"
+          ]
+        },
+        "target_zh": {
+          "description": "Chinese label for target.",
+          "enum": [
+            "腹肌",
+            "髋外展肌群",
+            "髋内收肌群",
+            "肱二头肌",
+            "小腿肌群",
+            "心肺系统",
+            "三角肌",
+            "前臂肌群",
+            "臀肌",
+            "腘绳肌",
+            "背阔肌",
+            "肩胛提肌",
+            "胸肌",
+            "股四头肌",
+            "前锯肌",
+            "竖脊肌",
+            "斜方肌",
+            "肱三头肌",
+            "上背部"
           ]
         },
         "measurement": {
@@ -118,17 +204,19 @@
         },
         "instructions_zh": {
           "type": "array",
-          "minItems": 1,
+          "minItems": 2,
           "items": {
             "type": "string",
-            "minLength": 1
+            "minLength": 4
           }
         },
         "instructions_en": {
+          "description": "English rendering of instructions_zh, one item per Chinese step.",
           "type": "array",
+          "minItems": 2,
           "items": {
             "type": "string",
-            "minLength": 1
+            "minLength": 4
           }
         },
         "source": {
@@ -301,23 +389,10 @@
           ],
           "properties": {
             "stage": {
-              "enum": [
-                "production_2026_09_07",
-                "style_sample",
-                "historical_candidate",
-                "user_selected_original",
-                "repaired_candidate",
-                "resumed_candidate",
-                "continuation_candidate",
-                "reviewed_illustration"
-              ]
+              "const": "reviewed_illustration"
             },
             "visual_screening": {
-              "enum": [
-                "production_authorized",
-                "ai_visual_candidate",
-                "ai_quick_visual_pass"
-              ]
+              "const": "ai_quick_visual_pass"
             },
             "professional_review": {
               "const": "not_performed"
@@ -328,5 +403,6 @@
       },
       "additionalProperties": false
     }
-  }
+  },
+  "description": "Schema for data/exercises.json. Enumerations are closed: adding a body part, equipment or target value requires a schema change."
 }

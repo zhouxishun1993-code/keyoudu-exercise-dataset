@@ -592,11 +592,11 @@ footer {
   }
 
   .toolbar {
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .toolbar label:last-child {
-    grid-column: 3;
+  .search-field {
+    grid-column: 1 / -1;
   }
 
   .exercise-grid {
@@ -646,7 +646,7 @@ footer {
   }
 
   .toolbar label:last-child {
-    grid-column: auto;
+    grid-column: 1 / -1;
   }
 
   .exercise-grid {

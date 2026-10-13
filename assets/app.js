@@ -11,6 +11,7 @@
   var searchInput = document.getElementById("search");
   var bodyPartSelect = document.getElementById("body-part");
   var equipmentSelect = document.getElementById("equipment");
+  var targetSelect = document.getElementById("target");
   var pagination = document.getElementById("pagination");
   var previousPage = document.getElementById("previous-page");
   var nextPage = document.getElementById("next-page");
@@ -48,11 +49,13 @@
       exercise.id,
       exercise.name_zh,
       exercise.aliases.join(" "),
+      exercise.target_zh,
       exercise.source.name
     ].join(" "));
     return (!term || haystack.indexOf(term) !== -1) &&
       (!bodyPartSelect.value || exercise.body_part === bodyPartSelect.value) &&
-      (!equipmentSelect.value || exercise.equipment === equipmentSelect.value);
+      (!equipmentSelect.value || exercise.equipment === equipmentSelect.value) &&
+      (!targetSelect.value || exercise.target_zh === targetSelect.value);
   }
 
   function cardHtml(exercise) {
@@ -86,7 +89,7 @@
     grid.setAttribute("aria-busy", "false");
 
     var shownFrom = visible.length ? start + 1 : 0;
-    summary.textContent = visible.length ? "当前显示 " + shownFrom + "–" + (start + visible.length) : "没有匹配结果";
+    summary.textContent = visible.length ? "共 " + filtered.length + " 个动作，当前显示 " + shownFrom + "–" + (start + visible.length) : "没有匹配结果";
     pageLabel.textContent = "第 " + page + " / " + totalPages + " 页";
     previousPage.disabled = page <= 1;
     nextPage.disabled = page >= totalPages;
@@ -128,6 +131,7 @@
         "<aside><h3>动作信息</h3><dl class=\"facts\">" +
           "<div><dt>身体部位</dt><dd>" + escapeHtml(exercise.body_part) + "</dd></div>" +
           "<div><dt>器械</dt><dd>" + escapeHtml(exercise.equipment) + "</dd></div>" +
+          "<div><dt>目标肌群</dt><dd>" + escapeHtml(exercise.target_zh) + "</dd></div>" +
           "<div><dt>计量方式</dt><dd>" + (exercise.measurement === "duration" ? "时长" : "次数") + "</dd></div>" +
           "<div><dt>媒体许可</dt><dd>CC BY 4.0</dd></div>" +
           "<div><dt>专业审核</dt><dd>未进行</dd></div>" +
@@ -163,6 +167,7 @@
 
     populateSelect(bodyPartSelect, Array.from(new Set(dataset.exercises.map(function (item) { return item.body_part; }))));
     populateSelect(equipmentSelect, Array.from(new Set(dataset.exercises.map(function (item) { return item.equipment; }))));
+    populateSelect(targetSelect, Array.from(new Set(dataset.exercises.map(function (item) { return item.target_zh; }))));
     filtered = dataset.exercises.slice();
     render();
   }
@@ -173,6 +178,7 @@
     searchInput.value = "";
     bodyPartSelect.value = "";
     equipmentSelect.value = "";
+    targetSelect.value = "";
     applyFilters();
     searchInput.focus();
   });

@@ -28,7 +28,8 @@ async function walk(directory) {
 
 const raw = await fs.readFile(dataFile, "utf8");
 const dataset = JSON.parse(raw);
-await fs.writeFile(browserFile, "window.KEYOUDU_EXERCISE_DATASET = " + JSON.stringify(dataset, null, 2) + ";\n");
+// The file:// snapshot is minified; data/exercises.json stays the readable canonical copy.
+await fs.writeFile(browserFile, "window.KEYOUDU_EXERCISE_DATASET = " + JSON.stringify(dataset) + ";\n");
 
 const files = await walk(root);
 const lines = [];
