@@ -1,6 +1,6 @@
 # 生成图片许可证
 
-images/ 目录中的 AI 生成图片由“课有度 Keyoudu”提供，并在相关权利存在的范围内采用 [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/) 许可证。
+images/ 目录中的图片使用 OpenAI 的图像生成模型 GPT Image 2 生成，由“课有度 Keyoudu”提供，并在相关权利存在的范围内采用 [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/) 许可证。
 
 你可以复制、再分发、改编和用于商业用途，但必须：
 

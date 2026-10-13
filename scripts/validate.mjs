@@ -115,7 +115,8 @@ validateSchema(dataset, schema, schema, "dataset");
 // One version number, stated once in package.json and repeated in the data file and changelog.
 assert(dataset.dataset_version === packageJson.version, "dataset_version differs from package.json version");
 const changelog = await fs.readFile(path.join(root, "CHANGELOG.md"), "utf8");
-const latestEntry = /^## ([^\s]+)/m.exec(changelog);
+// A leading “未发布” section collects changes made since the last release.
+const latestEntry = /^## (?!未发布)([^\s]+)/m.exec(changelog);
 assert(latestEntry && latestEntry[1] === packageJson.version, "Latest CHANGELOG entry differs from package.json version");
 assert(dataset.counts.exercises === dataset.exercises.length, "Exercise count does not match records");
 

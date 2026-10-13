@@ -29,7 +29,7 @@ npm run sync
 npm test
 ~~~
 
-sync 会重建 file:// 浏览页使用的数据快照和校验和文件。发布新版本时，先改 package.json 的 version，再把 data/exercises.json 的 dataset_version 和 CHANGELOG.md 最上面一节改成同一个版本号；三处不一致时 npm test 会失败。
+sync 会重建 file:// 浏览页使用的数据快照和校验和文件。发布新版本时，先改 package.json 的 version，再把 data/exercises.json 的 dataset_version 和 CHANGELOG.md 最上面一节改成同一个版本号；三处不一致时 npm test 会失败。两次发布之间的改动记在 CHANGELOG.md 最上面的“未发布”一节。
 
 ## 审核状态
 
